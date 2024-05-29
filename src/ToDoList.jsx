@@ -6,31 +6,36 @@ import { ArrowBigUp } from "lucide-react";
 
 function ToDoList(){
 
-const[tasks, setTasks] = useState(["Eat Food", "Walk dog"]);
+const[tasks, setTasks] = useState(["Eat Food", "Walk neighbor's dog"]);
 const[newTask, setNewTask] = useState("");
 
 function handleInputChange(event){
+    console.log(event.target.value);
     setNewTask(event.target.value);
 }
 function addTask(){
-    if(newTask.trim !== ""){
-        setTasks([...tasks, newTask]);
+    if(newTask.trim() !== ""){
+        setTasks(t => [...t, newTask]);
         setNewTask("");
     }
 }
 function deleteTask(index){
-    const updatedTask = tasks.filter((_,i) => i != index)
+    const updatedTask = tasks.filter((_,i) => i !== index)
     setTasks(updatedTask);
 }
 function moveTaskUp(index){
+    if(index > 0){
     const updatedTask = [...tasks];
-    updatedTask[index], updatedTask[index-1] = updatedTask[index-1], updatedTask[index];
+    [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
     setTasks(updatedTask);
+    }
 }
 function moveTaskDown(index){
+    if(index < tasks.length -1){
     const updatedTask = [...tasks];
-    updatedTask[index-1], updatedTask[index] = updatedTask[index-1], updatedTask[index];
+    [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]];
     setTasks(updatedTask);
+    }
 }
 
 
